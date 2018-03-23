@@ -34,6 +34,7 @@ RUN Invoke-WebRequest -Uri $env:VS_BUILDTOOLS_URI -OutFile C:\vs_buildtools.exe;
       '--add', 'Microsoft.VisualStudio.Component.Roslyn.Compiler', `
       '--add', 'Microsoft.VisualStudio.Workload.WebBuildTools', `
       '--add', 'Microsoft.VisualStudio.Workload.MSBuildTools', `
+      '--add', 'Microsoft.VisualStudio.Workload.NetCoreBuildTools', `
       '--add', 'Microsoft.VisualStudio.Component.Node.Tools', `
       '--includeRecommended --quiet --nocache --wait --installPath C:\BuildTools'; `
     if ($ret = $p.ExitCode) { c:\collect.exe; throw ('Install failed with exit code 0x{0:x}' -f $ret) } `
