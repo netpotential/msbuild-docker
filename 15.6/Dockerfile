@@ -9,6 +9,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 ENV NUGET_VERSION=4.4.1 `
     NODE_VERSION=8.10.0 `
+    NODE_DOWNLOAD_SHA=936ada36cb6f09a5565571e15eb8006e45c5a513529c19e21d070acf0e50321b `
     VS_BUILDTOOLS_URI=https://download.visualstudio.microsoft.com/download/pr/11835061/e64d79b40219aea618ce2fe10ebd5f0d/vs_BuildTools.exe
 
 # Install NuGet CLI    
@@ -87,6 +88,10 @@ RUN @('4.0', '4.5.2', '4.6.2', '4.7.1') `
 # Install node
 # From: https://github.com/aspnet/aspnet-docker/blob/master/1.1/nanoserver/sdk/Dockerfile
 RUN Invoke-WebRequest https://nodejs.org/dist/v${env:NODE_VERSION}/node-v${env:NODE_VERSION}-win-x64.zip -outfile node.zip; `
+    if ((Get-FileHash node.zip -Algorithm sha256).Hash -ne $env:NODE_DOWNLOAD_SHA) { `
+        Write-Host 'NODEJS CHECKSUM VERIFICATION FAILED!'; `
+        exit 1; `
+    }; `
     Expand-Archive node.zip -DestinationPath "C:/nodejs-tmp/"; `
     Move-Item "C:/nodejs-tmp/node-v${env:NODE_VERSION}-win-x64" -Destination "C:\nodejs"; `
     Remove-Item -Force "C:/nodejs-tmp/"; `
