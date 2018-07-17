@@ -98,3 +98,9 @@ RUN Invoke-WebRequest https://nodejs.org/dist/v${env:NODE_VERSION}/node-v${env:N
     Remove-Item -Force node.zip; `
     $env:PATH = 'C:\nodejs\;' + $env:PATH; `
     [Environment]::SetEnvironmentVariable('PATH', $env:PATH, [EnvironmentVariableTarget]::Machine);
+    
+# Install chocolatey    
+ENV chocolateyUseWindowsCompression false
+
+RUN Invoke-Expression ((New-Object Net.Webclient).DownloadString('https://chocolatey.org/install.ps1')) `
+    & choco feature disable --name showDownloadProgress
