@@ -102,5 +102,5 @@ RUN Invoke-WebRequest https://nodejs.org/dist/v${env:NODE_VERSION}/node-v${env:N
 # Install chocolatey    
 ENV chocolateyUseWindowsCompression false
 
-RUN Invoke-Expression ((New-Object Net.Webclient).DownloadString('https://chocolatey.org/install.ps1')) `
-    & .\choco feature disable --name showDownloadProgress
+RUN Invoke-Expression ((New-Object Net.Webclient).DownloadString('https://chocolatey.org/install.ps1')); `
+    &choco feature disable --name showDownloadProgress
