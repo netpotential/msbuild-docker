@@ -1,5 +1,5 @@
 # escape=`
-FROM microsoft/dotnet-framework:4.7.2-windowsservercore-1803
+FROM microsoft/dotnet-framework:4.7.2-runtime
 
 MAINTAINER dealdiane@netpotential.co.nz
 
