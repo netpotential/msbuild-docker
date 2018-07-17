@@ -1,5 +1,5 @@
 # escape=`
-FROM microsoft/dotnet-framework:4.7.1-windowsservercore-1709
+FROM microsoft/dotnet-framework:4.7.2-windowsservercore-1803
 
 MAINTAINER dealdiane@netpotential.co.nz
 
@@ -58,7 +58,7 @@ RUN Invoke-WebRequest -Uri $env:VS_BUILDTOOLS_URI -OutFile C:\vs_buildtools.exe;
 #SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; $VerbosePreference = 'Continue'; "]
 
 # Install Targeting Packs
-RUN @('4.0', '4.5.2', '4.6.2', '4.7.1') `
+RUN @('4.0', '4.5.2', '4.6.2', '4.7.2') `
     | %{ `
         Invoke-WebRequest -UseBasicParsing https://dotnetbinaries.blob.core.windows.net/referenceassemblies/v${_}.zip -OutFile referenceassemblies.zip; `
         Expand-Archive referenceassemblies.zip -Force -DestinationPath \"${Env:ProgramFiles(x86)}\Reference Assemblies\Microsoft\Framework\.NETFramework\"; `
