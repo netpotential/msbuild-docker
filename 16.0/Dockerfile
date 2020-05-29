@@ -1,16 +1,18 @@
 # escape=`
-FROM microsoft/dotnet-framework:4.7.2-runtime
+FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-1909
 
 MAINTAINER dealdiane@netpotential.co.nz
 
-# This DockerFile is based from https://github.com/Microsoft/dotnet-framework-docker/blob/master/4.7.1-windowsservercore-1709/build/Dockerfile
+# This DockerFile was based from 
+#   https://github.com/Microsoft/dotnet-framework-docker/blob/master/4.7.1-windowsservercore-1709/build/Dockerfile
+#   https://github.com/microsoft/dotnet-framework-docker/blob/master/4.8/sdk/windowsservercore-1909/Dockerfile
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; $VerbosePreference = 'Continue'; "]
 
-ENV NUGET_VERSION=4.4.1 `
+ENV NUGET_VERSION=5.3.1 `
     NODE_VERSION=8.10.0 `
     NODE_DOWNLOAD_SHA=936ada36cb6f09a5565571e15eb8006e45c5a513529c19e21d070acf0e50321b `
-    VS_BUILDTOOLS_URI=https://download.visualstudio.microsoft.com/download/pr/0fed0c12-ccd3-4767-b151-a616aaf99d86/360c496b69ec34805b9bd5afb5eaeb08b726be48f730c3bb557bf41ead9700d4/vs_BuildTools.exe
+    VS_BUILDTOOLS_URI=https://aka.ms/vs/16/release/vs_buildtools.exe
 
 # Install NuGet CLI    
 RUN New-Item -Type Directory $Env:ProgramFiles\NuGet; `
