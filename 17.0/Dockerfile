@@ -12,8 +12,7 @@ ENV NUGET_VERSION=6.1.0 `
     VS_BUILDTOOLS_URI=https://aka.ms/vs/17/release/vs_buildtools.exe `
     VS_TESTAGENT_URI=https://download.visualstudio.microsoft.com/download/pr/dc2793e9-7b80-4f11-9e33-85833e8921a6/129ac716764b517709d969cad9e89c4472451c0c7c746f4f1e3141ddcef885c8/vs_TestAgent.exe `
     ROSLYN_COMPILER_LOCATION="C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn" `
-    # Do not generate certificate
-    DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false
 
 # Install NuGet CLI
 RUN mkdir "%ProgramFiles%\NuGet\latest" `
