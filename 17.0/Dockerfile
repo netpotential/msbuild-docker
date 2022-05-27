@@ -1,5 +1,5 @@
 # escape=`
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8
+FROM mcr.microsoft.com/dotnet/framework/runtime:4.8
 
 MAINTAINER dealdiane@netpotential.co.nz
 
@@ -13,6 +13,8 @@ ENV NUGET_VERSION=6.1.0 `
     VS_TESTAGENT_URI=https://download.visualstudio.microsoft.com/download/pr/dc2793e9-7b80-4f11-9e33-85833e8921a6/129ac716764b517709d969cad9e89c4472451c0c7c746f4f1e3141ddcef885c8/vs_TestAgent.exe `
     ROSLYN_COMPILER_LOCATION="C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn" `
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false
+
+SHELL ["cmd", "/S", "/C"]
 
 # Install NuGet CLI
 RUN mkdir "%ProgramFiles%\NuGet\latest" `
@@ -82,17 +84,20 @@ RUN powershell setx /M PATH $(${Env:PATH} `
     + \";${Env:ProgramFiles(x86)}\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\" `
     + \";${Env:ProgramFiles(x86)}\Microsoft SDKs\ClickOnce\SignTool\")
 
+USER ContainerAdministrator 
+
 # Install Targeting Packs
 RUN powershell " `
     $ErrorActionPreference = 'Stop'; `
     $ProgressPreference = 'SilentlyContinue'; `
     @('4.0', '4.5.2', '4.6.2', '4.7.2', '4.8') `
     | %{ `
+        Write-Host "Installing targeting pack for .NET ${_}"; `
         Invoke-WebRequest `
             -UseBasicParsing `
             -Uri https://dotnetbinaries.blob.core.windows.net/referenceassemblies/v${_}.zip `
             -OutFile referenceassemblies.zip; `
-        Expand-Archive referenceassemblies.zip -DestinationPath \"${Env:ProgramFiles(x86)}\Reference Assemblies\Microsoft\Framework\.NETFramework\"; `
+        Expand-Archive referenceassemblies.zip -DestinationPath \"${Env:ProgramFiles(x86)}\Reference Assemblies\Microsoft\Framework\.NETFramework\" -Force; `
         Remove-Item -Force referenceassemblies.zip; `
     }"
 
